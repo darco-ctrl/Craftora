@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpuo035pjh7xn"]
+[gd_scene load_steps=3 format=3 uid="uid://cpuo035pjh7xn"]
 
 [ext_resource type="Script" uid="uid://bjl0n3wfwx7ue" path="res://scripts/world/map_loader.gd" id="1_dphjl"]
+[ext_resource type="Material" uid="uid://b83qyx3plgu3g" path="res://assets/materials/plane_grass_mat.tres" id="2_sl2e5"]
 
 [node name="world" type="Node3D"]
 script = ExtResource("1_dphjl")
+render_distance = 3
+chunk_material = ExtResource("2_sl2e5")

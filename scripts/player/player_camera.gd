@@ -2,6 +2,7 @@
 ## this is independent to Tick of the game
 
 extends Node3D
+class_name Player
 
 @export var camera_ground_pivot: Node3D
 @export var camera_pivot: Node3D
@@ -15,10 +16,8 @@ extends Node3D
 
 var camera_velocity: Vector3
 
-var done_loading: bool = false
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	GameManager.set_player(self)
 
 
 
@@ -44,9 +43,6 @@ func camera_rotation_position(delta_time: float)-> void:
 	
 	var distance_vector: Vector3 = camera_pivot.global_position - camera_ground_pivot.global_position
 	var distance: float = distance_vector.length()
-	
-	if distance > max_zoom:
-		camera_pivot.global_position = camera_ground_pivot.global_position + distance_vector * max_zoom
 	
 	camera_pivot.position = new_position
 

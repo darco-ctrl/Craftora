@@ -1,17 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://bh8oh624bihl6"]
 
 [ext_resource type="PackedScene" uid="uid://sp16ofwo3pbr" path="res://scenes/player/player_camera.tscn" id="1_dv3lr"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7a3kd"]
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_dv3lr"]
-material = SubResource("StandardMaterial3D_7a3kd")
+[ext_resource type="PackedScene" uid="uid://bcyvmrhqyjfhm" path="res://scenes/world/environment.tscn" id="2_ei2sf"]
+[ext_resource type="PackedScene" uid="uid://cpuo035pjh7xn" path="res://scenes/world/world.tscn" id="3_ubvhi"]
 
 [node name="main_scene" type="Node3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
-mesh = SubResource("PlaneMesh_dv3lr")
-
 [node name="Player" parent="." instance=ExtResource("1_dv3lr")]
+
+[node name="Environment" parent="." instance=ExtResource("2_ei2sf")]
+
+[node name="world" parent="." instance=ExtResource("3_ubvhi")]

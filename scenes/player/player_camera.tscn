@@ -11,6 +11,7 @@ camera = NodePath("CameraGroundPivot/CameraPivot/Camera3D")
 [node name="CameraGroundPivot" type="Node3D" parent="."]
 
 [node name="CameraPivot" type="Node3D" parent="CameraGroundPivot"]
-transform = Transform3D(0.707107, -0.408607, 0.577096, 0, 0.816138, 0.577858, -0.707107, -0.408607, 0.577096, 3, 3, 3)
+transform = Transform3D(0.707107, -0.408607, 0.577096, 0, 0.816138, 0.577858, -0.707107, -0.408607, 0.577096, 8, 300, 8)
 
 [node name="Camera3D" type="Camera3D" parent="CameraGroundPivot/CameraPivot"]
+fov = 45.0
