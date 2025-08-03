@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://sp16ofwo3pbr"]
+
+[ext_resource type="Script" uid="uid://c3m4sc7ercamh" path="res://scripts/player/player_camera.gd" id="1_1hb71"]
+
+[node name="Player" type="Node3D" node_paths=PackedStringArray("camera_ground_pivot", "camera_pivot", "camera")]
+script = ExtResource("1_1hb71")
+camera_ground_pivot = NodePath("CameraGroundPivot")
+camera_pivot = NodePath("CameraGroundPivot/CameraPivot")
+camera = NodePath("CameraGroundPivot/CameraPivot/Camera3D")
+
+[node name="CameraGroundPivot" type="Node3D" parent="."]
+
+[node name="CameraPivot" type="Node3D" parent="CameraGroundPivot"]
+transform = Transform3D(0.707107, -0.408607, 0.577096, 0, 0.816138, 0.577858, -0.707107, -0.408607, 0.577096, 3, 3, 3)
+
+[node name="Camera3D" type="Camera3D" parent="CameraGroundPivot/CameraPivot"]
