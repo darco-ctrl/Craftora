@@ -22,3 +22,9 @@ func update_tick(delta_time: float) -> void:
 
 func set_player(plr: Player)-> void:
 	player = plr
+
+func is_game_tick_even()-> bool:
+	if tick % 2 == 0:
+		return true
+	else:
+		return false

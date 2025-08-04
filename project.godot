@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*res://global/game_manager.gd"
-ChunkLoader="*res://global/chunk_loader.gd"
 
 [input]
 

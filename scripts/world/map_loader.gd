@@ -13,25 +13,26 @@ func _ready() -> void:
 	render_distance_squared = render_distance * render_distance
 
 func _process(delta: float) -> void:
-	chunks_loader()
-	
-func chunks_loader() -> void:
-	var new_chunks = make_new_chunk_list()
-	for chunk in new_chunks:
-		if !queued_chunks.has(chunk):
-			queued_chunks.append(chunk)
+	if GameManager.is_game_tick_even():
+		queued_chunks = make_new_chunk_list()
+		chunk_unloader()
+	else:
+		render_mesh()
 
-	render_mesh()
+func chunk_unloader() -> void:
+	for chunk in loaded_chunks:
+		if can_unload_chunk(chunk):
+			loaded_chunks[chunk].queue_free()
+			loaded_chunks.erase(chunk)
 
 func make_new_chunk_list()-> Array[Vector2i]: # make a list of chunks to be loaded in next tick
 	var chunks_to_load: Array[Vector2i]
 	var player_chunk_position: Vector2i = position_to_chunk_coordinates(GameManager.player.camera_ground_pivot.position)
-	print(player_chunk_position)
 	
-	for x in range(player_chunk_position.x - render_distance, player_chunk_position.x + render_distance + 1):
-		for y in range(player_chunk_position.y - render_distance, player_chunk_position.y + render_distance + 1):
-			if is_in_render_distance(x, y):
-				var new_chunk: Vector2i = Vector2i(x, y)
+	for x in range(-render_distance, render_distance + 1):
+		for y in range(-render_distance, render_distance + 1):
+			if is_in_radius(x, y):
+				var new_chunk: Vector2i = Vector2i(x + player_chunk_position.x, y + player_chunk_position.y)
 				if !loaded_chunks.has(new_chunk):
 					chunks_to_load.append(new_chunk)
 	
@@ -40,7 +41,7 @@ func make_new_chunk_list()-> Array[Vector2i]: # make a list of chunks to be load
 func render_mesh()-> void:
 	if !queued_chunks.is_empty():
 		for chunk in queued_chunks.duplicate():
-			var new_chunk_mesh: MeshInstance3D = ChunkLoader.create_plane_mesh(chunk, chunk_size, chunk_material)
+			var new_chunk_mesh: MeshInstance3D = create_plane_mesh(chunk, chunk_size, chunk_material)
 			add_child(new_chunk_mesh)
 			new_chunk_mesh.visible = true
 			new_chunk_mesh.position = chunk_coordinates_to_position(chunk)
@@ -51,11 +52,28 @@ func render_mesh()-> void:
 			if index != -1:
 				queued_chunks.remove_at(index)
 
-func is_in_render_distance(x: int, y: int)-> bool:
+func is_in_radius(x: int, y: int)-> bool:
 	return x * x + y * y <= render_distance_squared
 
 func position_to_chunk_coordinates(pos: Vector3)-> Vector2i:
-	return Vector2i(floor(pos.x / chunk_size.y), floor(pos.y / chunk_size.y))
+	return Vector2i(floor(pos.x / chunk_size.y), floor(pos.z / chunk_size.y))
 	
 func chunk_coordinates_to_position(chunk_pos: Vector2i)-> Vector3:
 	return Vector3(floor(chunk_pos.x * chunk_size.y), 0, floor(chunk_pos.y * chunk_size.y))
+
+func can_unload_chunk(chunk_pos: Vector2i)-> bool:
+	if position_to_chunk_coordinates(GameManager.player.camera_ground_pivot.position).distance_to(chunk_pos) > render_distance:
+		return true
+	return false
+
+func create_plane_mesh(chunk_pos: Vector2, plane_size: Vector2, mat: StandardMaterial3D)-> MeshInstance3D:
+	var chunk_mesh: MeshInstance3D = MeshInstance3D.new()
+	
+	var plane_mesh = PlaneMesh.new()
+	plane_mesh.size = plane_size
+	plane_mesh.material = mat
+	plane_mesh.center_offset = Vector3(plane_size.x / 2, 0, plane_size.y / 2)
+	
+	chunk_mesh.mesh = plane_mesh
+	
+	return chunk_mesh
