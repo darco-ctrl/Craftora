@@ -16,9 +16,10 @@ class_name Player
 
 var camera_velocity: Vector3
 
+## >> MAIN FUNCTIONS << ##
+
 func _ready() -> void:
 	GameManager.set_player(self)
-
 
 
 func _physics_process(delta: float) -> void:

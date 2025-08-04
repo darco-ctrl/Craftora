@@ -1,6 +1,5 @@
 extends Node3D
 
-## >>> CHUNK VARIABLES <<< ##
 @export var render_distance: int = 9 ## Player render distance
 @export var chunk_size: Vector2i = Vector2i(16, 16) ## Chunk size in meter
 @export var chunk_material: StandardMaterial3D ## plane mesh material used to make chunks
@@ -8,6 +7,10 @@ extends Node3D
 var loaded_chunks: Dictionary[Vector2i, MeshInstance3D] = {}
 var render_distance_squared: int
 var queued_chunks: Array[Vector2i] = []
+
+var switch_: bool = false
+
+## >> MAIN FUNCTIONS << ##
 
 func _ready() -> void:
 	render_distance_squared = render_distance * render_distance
@@ -41,16 +44,31 @@ func make_new_chunk_list()-> Array[Vector2i]: # make a list of chunks to be load
 func render_mesh()-> void:
 	if !queued_chunks.is_empty():
 		for chunk in queued_chunks.duplicate():
-			var new_chunk_mesh: MeshInstance3D = create_plane_mesh(chunk, chunk_size, chunk_material)
+			var new_chunk_mesh: MeshInstance3D = create_plane_mesh(chunk, chunk_size)
 			add_child(new_chunk_mesh)
 			new_chunk_mesh.visible = true
 			new_chunk_mesh.position = chunk_coordinates_to_position(chunk)
 			loaded_chunks[chunk] = new_chunk_mesh
-			queued_chunks.erase(chunk)
 			
 			var index := queued_chunks.find(chunk)
 			if index != -1:
 				queued_chunks.remove_at(index)
+
+
+func create_plane_mesh(chunk_pos: Vector2, plane_size: Vector2)-> MeshInstance3D:
+	var chunk_mesh: MeshInstance3D = MeshInstance3D.new()
+	
+	var plane_mesh = PlaneMesh.new()
+	plane_mesh.size = plane_size
+	plane_mesh.material = chunk_material
+	
+	plane_mesh.center_offset = Vector3(plane_size.x / 2, 0, plane_size.y / 2)
+	
+	chunk_mesh.mesh = plane_mesh
+	
+	return chunk_mesh
+
+## >> SUPPORTING FUNCTIONS << ##
 
 func is_in_radius(x: int, y: int)-> bool:
 	return x * x + y * y <= render_distance_squared
@@ -65,15 +83,3 @@ func can_unload_chunk(chunk_pos: Vector2i)-> bool:
 	if position_to_chunk_coordinates(GameManager.player.camera_ground_pivot.position).distance_to(chunk_pos) > render_distance:
 		return true
 	return false
-
-func create_plane_mesh(chunk_pos: Vector2, plane_size: Vector2, mat: StandardMaterial3D)-> MeshInstance3D:
-	var chunk_mesh: MeshInstance3D = MeshInstance3D.new()
-	
-	var plane_mesh = PlaneMesh.new()
-	plane_mesh.size = plane_size
-	plane_mesh.material = mat
-	plane_mesh.center_offset = Vector3(plane_size.x / 2, 0, plane_size.y / 2)
-	
-	chunk_mesh.mesh = plane_mesh
-	
-	return chunk_mesh

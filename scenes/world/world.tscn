@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpuo035pjh7xn"]
+[gd_scene load_steps=4 format=3 uid="uid://cpuo035pjh7xn"]
 
 [ext_resource type="Script" uid="uid://bjl0n3wfwx7ue" path="res://scripts/world/map_loader.gd" id="1_dphjl"]
 [ext_resource type="Material" uid="uid://b83qyx3plgu3g" path="res://assets/materials/plane_grass_mat.tres" id="2_sl2e5"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_sl2e5"]
 
 [node name="world" type="Node3D"]
 script = ExtResource("1_dphjl")
 render_distance = 3
 chunk_material = ExtResource("2_sl2e5")
+
+[node name="WorldGroundCollision" type="StaticBody3D" parent="."]
+collision_layer = 3
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldGroundCollision"]
+shape = SubResource("WorldBoundaryShape3D_sl2e5")
