@@ -42,8 +42,8 @@ func camera_rotation_position(delta_time: float)-> void:
 	
 	new_position += forward_direction * camera_zoom_in_out_speed * input_direction * delta_time
 	
-	var distance_vector: Vector3 = camera_pivot.global_position - camera_ground_pivot.global_position
-	var distance: float = distance_vector.length()
+	#var distance_vector: Vector3 = camera_pivot.global_position - camera_ground_pivot.global_position
+	#var distance: float = distance_vector.length()
 	
 	camera_pivot.position = new_position
 

@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://cpuo035pjh7xn"]
+[gd_scene load_steps=5 format=3 uid="uid://cpuo035pjh7xn"]
 
 [ext_resource type="Script" uid="uid://bjl0n3wfwx7ue" path="res://scripts/world/map_loader.gd" id="1_dphjl"]
+[ext_resource type="PackedScene" uid="uid://mrg8b7q5vhp1" path="res://scenes/resources/tree/tree.tscn" id="2_1fp7r"]
 [ext_resource type="Material" uid="uid://b83qyx3plgu3g" path="res://assets/materials/plane_grass_mat.tres" id="2_sl2e5"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_sl2e5"]
 
-[node name="world" type="Node3D"]
+[node name="world" type="Node3D" node_paths=PackedStringArray("grounds", "resources", "placed_objects")]
 script = ExtResource("1_dphjl")
-render_distance = 3
-chunk_material = ExtResource("2_sl2e5")
+grounds = NodePath("Ground")
+resources = NodePath("Resources")
+placed_objects = NodePath("PlacedObjects")
+Object_Array = Array[PackedScene]([ExtResource("2_1fp7r"), null])
+ground_material = ExtResource("2_sl2e5")
 
 [node name="WorldGroundCollision" type="StaticBody3D" parent="."]
 collision_layer = 3
@@ -16,3 +20,11 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldGroundCollision"]
 shape = SubResource("WorldBoundaryShape3D_sl2e5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldGroundCollision"]
+
+[node name="Ground" type="Node3D" parent="."]
+
+[node name="Resources" type="Node3D" parent="."]
+
+[node name="PlacedObjects" type="Node3D" parent="."]

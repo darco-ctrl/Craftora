@@ -13,7 +13,7 @@ var ray_query: PhysicsRayQueryParameters3D
 func _ready() -> void:
 	initialize_ray()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	update_ray_cast()
 
 ## >> --------------- << ##
@@ -35,17 +35,30 @@ func update_ray_cast()-> void:
 	var raycast_result = space_state.intersect_ray(ray_query)
 	
 	if !raycast_result.is_empty():
-		var pos = raycast_result["position"]
-		var y: int
-		
-		if pos.y < 0: y = 0
-		else: y = int(pos.y)
-		
-		selection_box.position = Vector3(floor(pos.x), y - 1, floor(pos.z))
-		selection_box.visible = true
+		var collider = raycast_result["collider"]
+		if collider.is_in_group("block"):
+			selection_box.position = collider.position
+		else:
+			var pos = raycast_result["position"]
+			
+			var y: int
+			if pos.y < 0: y = 0
+			else: y = int(pos.y)
+			
+			selection_box.position = Vector3(grid(pos.x), y - 1, grid(pos.z))
+			selection_box.visible = true
 	else:
 		selection_box.visible = false
 	
 	
 
 ## >> SUPPORT FUNCTIONS << ##
+
+func grid(num: float)-> int:
+	var int_num: int
+	if num < 0:
+		int_num = int(num - 1)
+	else:
+		int_num = int(num)
+	
+	return int_num

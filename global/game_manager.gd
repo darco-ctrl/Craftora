@@ -1,7 +1,7 @@
 extends Node
 
-const TICK_PER_SECOND: int = 20
-const TICK_INTERVAL: float = 0.05
+const TICK_PER_SECOND: int = 30
+const TICK_INTERVAL: float = 0.0333
 var tick: int = 0
 var tick_time: float = 0
 
