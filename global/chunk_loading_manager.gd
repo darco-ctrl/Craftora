@@ -79,11 +79,19 @@ func make_new_chunk_list()-> Array[Vector2i]: # make a list of chunks to be load
 func chunk_unloader_prepare() -> void:
 	for chunk in loaded_chunks:
 		if can_unload_chunk(chunk):
-			chunks_to_unload.append(chunk)
+			var plane = loaded_chunks[chunk]
+			if is_instance_valid(plane):
+				chunks_to_unload.append(chunk)
+			else:
+				loaded_objects.erase(chunk)
 	
 	for object_pos in loaded_objects:
-		if !loaded_chunks.has(loaded_objects[object_pos].chunk_position):
-			objects_to_unload.append(object_pos)
+		var object = loaded_objects[object_pos]
+		if is_instance_valid(object):
+			if !loaded_chunks.has(loaded_objects[object_pos].chunk_position):
+				objects_to_unload.append(object_pos)
+		else:
+			loaded_objects.erase(object_pos)
 
 func chunk_unloader_process() -> void:
 	for i in range(MAX_UNLOADS_PER_FRAME):

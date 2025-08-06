@@ -1,13 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bh8oh624bihl6"]
+[gd_scene load_steps=5 format=3 uid="uid://bh8oh624bihl6"]
 
+[ext_resource type="Script" uid="uid://dq5tp8p108e2y" path="res://scripts/main/main.gd" id="1_24sno"]
 [ext_resource type="PackedScene" uid="uid://sp16ofwo3pbr" path="res://scenes/player/player_camera.tscn" id="1_dv3lr"]
 [ext_resource type="PackedScene" uid="uid://bcyvmrhqyjfhm" path="res://scenes/world/environment.tscn" id="2_ei2sf"]
 [ext_resource type="PackedScene" uid="uid://cpuo035pjh7xn" path="res://scenes/world/world.tscn" id="3_ubvhi"]
 
 [node name="main_scene" type="Node3D"]
+script = ExtResource("1_24sno")
 
 [node name="Player" parent="." instance=ExtResource("1_dv3lr")]
 
 [node name="Environment" parent="." instance=ExtResource("2_ei2sf")]
 
 [node name="world" parent="." instance=ExtResource("3_ubvhi")]
+
+[node name="UserInterface" type="CanvasLayer" parent="."]

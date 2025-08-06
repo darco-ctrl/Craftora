@@ -3,14 +3,11 @@ extends Node3D
 @export var selection_box: Node3D
 @export var camera: Camera3D
 
-@export var player_interaction_range: int = 100
-
-var space_state: PhysicsDirectSpaceState3D
 var ray_query: PhysicsRayQueryParameters3D
+var space_state: PhysicsDirectSpaceState3D
 
 ## >> MAIN FUNCTIONS << ##
-
-func _ready() -> void:
+func _ready()-> void:
 	initialize_ray()
 
 func _process(_delta: float) -> void:
@@ -27,7 +24,7 @@ func initialize_ray()-> void:
 func update_ray_cast()-> void:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var from: Vector3 = camera.project_ray_origin(mouse_pos)
-	var to: Vector3 = from + camera.project_ray_normal(mouse_pos) * player_interaction_range
+	var to: Vector3 = from + camera.project_ray_normal(mouse_pos) * GameManager.player_range
 	
 	ray_query.from = from
 	ray_query.to = to
