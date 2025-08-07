@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bh8oh624bihl6"]
+[gd_scene load_steps=6 format=3 uid="uid://bh8oh624bihl6"]
 
 [ext_resource type="Script" uid="uid://dq5tp8p108e2y" path="res://scripts/main/main.gd" id="1_24sno"]
 [ext_resource type="PackedScene" uid="uid://sp16ofwo3pbr" path="res://scenes/player/player_camera.tscn" id="1_dv3lr"]
 [ext_resource type="PackedScene" uid="uid://bcyvmrhqyjfhm" path="res://scenes/world/environment.tscn" id="2_ei2sf"]
 [ext_resource type="PackedScene" uid="uid://cpuo035pjh7xn" path="res://scenes/world/world.tscn" id="3_ubvhi"]
+[ext_resource type="PackedScene" uid="uid://cswebvh7nxxbf" path="res://scenes/user_interface/player_inventory/inventory.tscn" id="5_s7l2u"]
 
 [node name="main_scene" type="Node3D"]
 script = ExtResource("1_24sno")
@@ -15,3 +16,25 @@ script = ExtResource("1_24sno")
 [node name="world" parent="." instance=ExtResource("3_ubvhi")]
 
 [node name="UserInterface" type="CanvasLayer" parent="."]
+
+[node name="inventories" type="Control" parent="UserInterface"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Inventory" parent="UserInterface/inventories" instance=ExtResource("5_s7l2u")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -523.0
+offset_top = -289.0
+offset_right = 523.0
+offset_bottom = 289.0
+grow_horizontal = 2
+grow_vertical = 2

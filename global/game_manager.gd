@@ -58,5 +58,5 @@ func run_ray_check()-> void:
 		
 		if collider.is_in_group("interactable"):
 			if Input.is_action_just_pressed("attack"):
-				collider.trigger()
+				collider.attacked()
 		

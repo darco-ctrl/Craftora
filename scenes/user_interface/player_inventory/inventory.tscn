@@ -1,0 +1,300 @@
+[gd_scene load_steps=5 format=3 uid="uid://cswebvh7nxxbf"]
+
+[ext_resource type="Texture2D" uid="uid://khp2vyibmi7s" path="res://assets/user_interface/inventory.png" id="1_yno4q"]
+[ext_resource type="PackedScene" uid="uid://cmola6kfufb5n" path="res://scenes/user_interface/player_inventory/slot.tscn" id="2_28yty"]
+[ext_resource type="Script" uid="uid://dlo4hsylj55dk" path="res://scripts/user_interface/player_inventory/player_inventory.gd" id="2_pww8q"]
+[ext_resource type="Resource" uid="uid://dxjovu2hkawan" path="res://data/inventories/player_inventory.tres" id="3_ubfy1"]
+
+[node name="InventoryUI" type="TextureRect"]
+offset_right = 1046.0
+offset_bottom = 578.0
+texture = ExtResource("1_yno4q")
+script = ExtResource("2_pww8q")
+inventory = ExtResource("3_ubfy1")
+
+[node name="InventorySlotsGrid" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0127877
+anchor_top = 0.0277778
+anchor_right = 0.70844
+anchor_bottom = 0.972222
+offset_top = -3.05176e-05
+offset_right = -3.05176e-05
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 8
+
+[node name="slot1" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot2" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot3" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot4" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot5" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot6" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot7" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot8" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot9" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot10" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot11" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot12" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot13" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot14" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot15" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot16" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot17" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot18" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot19" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot20" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot21" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot22" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot23" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot24" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot25" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot26" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot27" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot28" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot29" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot30" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot31" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot32" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot33" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot34" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot35" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot36" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot37" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot38" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot39" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot40" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot41" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot42" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot43" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot44" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot45" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot46" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot47" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot48" parent="InventorySlotsGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HandCraftingGrid" type="GridContainer" parent="."]
+layout_mode = 0
+anchor_left = 0.769821
+anchor_top = 0.101852
+anchor_right = 0.943734
+anchor_bottom = 0.416667
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="slot" parent="HandCraftingGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot2" parent="HandCraftingGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot3" parent="HandCraftingGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="slot4" parent="HandCraftingGrid" instance=ExtResource("2_28yty")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
