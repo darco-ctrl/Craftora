@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://0307f7rub0de"]
 
-[ext_resource type="Script" uid="uid://c1qs5yshb1ooo" path="res://scripts/resources/tree/tree.gd" id="1_a5g02"]
+[ext_resource type="Script" uid="uid://beuk677w2jobn" path="res://scripts/resources/tree/TreeRes.cs" id="1_a5g02"]
 [ext_resource type="PackedScene" uid="uid://cpfg7ibfi6foy" path="res://assets/models/tree/tree.glb" id="2_a5g02"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kd132"]
@@ -41,11 +41,13 @@ _data = {
 &"tree_attacked": SubResource("Animation_05kwb")
 }
 
-[node name="tree" type="StaticBody3D" node_paths=PackedStringArray("tree_animation_player") groups=["interactable"]]
+[node name="tree" type="StaticBody3D" node_paths=PackedStringArray("TreeAnimationPlayer", "VisibleOnScreen", "TreeMesh") groups=["interactable"]]
 collision_layer = 5
 collision_mask = 0
 script = ExtResource("1_a5g02")
-tree_animation_player = NodePath("TreeAnimationPlayer")
+TreeAnimationPlayer = NodePath("TreeAnimationPlayer")
+VisibleOnScreen = NodePath("VisibleOnScreenNotifier3D")
+TreeMesh = NodePath("tree")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.05444, 0.5)
@@ -58,3 +60,7 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0.5, 0, 0.5)
 libraries = {
 &"": SubResource("AnimationLibrary_1oiyo")
 }
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.0039, 0.691971)
+aabb = AABB(0.4, -1, -0.6, -0.8, 2, 0.85)

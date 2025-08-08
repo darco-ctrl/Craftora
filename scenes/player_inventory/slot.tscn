@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://cmola6kfufb5n"]
 
 [ext_resource type="Texture2D" uid="uid://ch8g4c8pk7k25" path="res://assets/user_interface/slot.png" id="1_0p5wg"]
-[ext_resource type="Script" uid="uid://viiy8ncbd8xn" path="res://scripts/user_interface/player_inventory/slot.gd" id="1_5qq88"]
+[ext_resource type="Script" uid="uid://c0y7ay6x838ap" path="res://scripts/user_interface/player_inventory/Slot.cs" id="2_2kayi"]
 
-[node name="slot" type="TextureRect" node_paths=PackedStringArray("item_texture")]
+[node name="slot" type="TextureRect"]
 custom_minimum_size = Vector2(34, 34)
 anchors_preset = -1
 anchor_right = 0.0177083
@@ -11,8 +11,7 @@ anchor_bottom = 0.0314815
 offset_right = -34.0
 offset_bottom = -34.0
 texture = ExtResource("1_0p5wg")
-script = ExtResource("1_5qq88")
-item_texture = NodePath("ItemTexure")
+script = ExtResource("2_2kayi")
 metadata/_edit_use_anchors_ = true
 
 [node name="ItemTexure" type="TextureRect" parent="."]
