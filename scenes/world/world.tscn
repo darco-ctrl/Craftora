@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cpuo035pjh7xn"]
 
 [ext_resource type="Script" uid="uid://bjl0n3wfwx7ue" path="res://scripts/world/map_loader.gd" id="1_dphjl"]
-[ext_resource type="PackedScene" uid="uid://mrg8b7q5vhp1" path="res://scenes/resources/tree/tree.tscn" id="2_1fp7r"]
+[ext_resource type="PackedScene" uid="uid://0307f7rub0de" path="res://scenes/resources/tree/tree.tscn" id="2_1fp7r"]
 [ext_resource type="Material" uid="uid://b83qyx3plgu3g" path="res://assets/materials/plane_grass_mat.tres" id="2_sl2e5"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_sl2e5"]
@@ -11,7 +11,7 @@ script = ExtResource("1_dphjl")
 grounds = NodePath("Ground")
 resources = NodePath("Resources")
 placed_objects = NodePath("PlacedObjects")
-Object_Array = Array[PackedScene]([ExtResource("2_1fp7r"), null])
+Object_Array = Array[PackedScene]([ExtResource("2_1fp7r")])
 ground_material = ExtResource("2_sl2e5")
 
 [node name="WorldGroundCollision" type="StaticBody3D" parent="."]

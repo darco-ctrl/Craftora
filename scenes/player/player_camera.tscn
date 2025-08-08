@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://sp16ofwo3pbr"]
+[gd_scene load_steps=6 format=3 uid="uid://sp16ofwo3pbr"]
 
 [ext_resource type="Script" uid="uid://c3m4sc7ercamh" path="res://scripts/player/player_camera.gd" id="1_1hb71"]
 [ext_resource type="Script" uid="uid://ohxfbr0r1h05" path="res://scripts/player/player_interaction.gd" id="2_kw8wo"]
@@ -10,6 +10,9 @@ albedo_color = Color(1, 1, 1, 0.180392)
 [sub_resource type="BoxMesh" id="BoxMesh_kw8wo"]
 material = SubResource("StandardMaterial3D_1hb71")
 size = Vector3(1.01, 1.01, 1.01)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kw8wo"]
+radius = 2.0
 
 [node name="Player" type="Node3D" node_paths=PackedStringArray("camera_ground_pivot", "camera_pivot", "camera")]
 script = ExtResource("1_1hb71")
@@ -25,8 +28,9 @@ transform = Transform3D(0.707107, -0.408607, 0.577096, 0, 0.816138, 0.577858, -0
 [node name="Camera3D" type="Camera3D" parent="CameraGroundPivot/CameraPivot"]
 fov = 45.0
 
-[node name="PlayerInteractions" type="Node3D" parent="." node_paths=PackedStringArray("selection_box", "camera")]
+[node name="PlayerInteractions" type="Node3D" parent="." node_paths=PackedStringArray("item_collision", "selection_box", "camera")]
 script = ExtResource("2_kw8wo")
+item_collision = NodePath("../ItemCollision")
 selection_box = NodePath("SelectionPivot")
 camera = NodePath("../CameraGroundPivot/CameraPivot/Camera3D")
 
@@ -36,3 +40,10 @@ camera = NodePath("../CameraGroundPivot/CameraPivot/Camera3D")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
 mesh = SubResource("BoxMesh_kw8wo")
 skeleton = NodePath("../../..")
+
+[node name="ItemCollision" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemCollision"]
+shape = SubResource("SphereShape3D_kw8wo")

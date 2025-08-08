@@ -1,52 +1,60 @@
-[gd_scene load_steps=9 format=3 uid="uid://mrg8b7q5vhp1"]
+[gd_scene load_steps=7 format=3 uid="uid://0307f7rub0de"]
 
-[ext_resource type="Material" uid="uid://ccpiddkqupvlq" path="res://assets/materials/leaves.tres" id="1_05kwb"]
 [ext_resource type="Script" uid="uid://c1qs5yshb1ooo" path="res://scripts/resources/tree/tree.gd" id="1_a5g02"]
+[ext_resource type="PackedScene" uid="uid://cpfg7ibfi6foy" path="res://assets/models/tree/tree.glb" id="2_a5g02"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_a5g02"]
-size = Vector3(1, 3.08838, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_kd132"]
+size = Vector3(1, 2, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1oiyo"]
-albedo_color = Color(0.469802, 0, 0.106058, 1)
+[sub_resource type="Animation" id="Animation_a5g02"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("tree:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
 
-[sub_resource type="BoxMesh" id="BoxMesh_xkgv7"]
-material = SubResource("StandardMaterial3D_1oiyo")
-size = Vector3(0.2, 1, 0.2)
+[sub_resource type="Animation" id="Animation_05kwb"]
+resource_name = "tree_attacked"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("tree:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, -0.2, -0.15, 0, 0.15, 0, 0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.15, 0.299976)
+}
 
-[sub_resource type="BoxMesh" id="BoxMesh_a3qvm"]
-material = ExtResource("1_05kwb")
-size = Vector3(1, 0.5, 1)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1oiyo"]
+_data = {
+&"RESET": SubResource("Animation_a5g02"),
+&"tree_attacked": SubResource("Animation_05kwb")
+}
 
-[sub_resource type="BoxMesh" id="BoxMesh_crxe8"]
-material = ExtResource("1_05kwb")
-size = Vector3(0.8, 0.5, 0.8)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ir0uo"]
-material = ExtResource("1_05kwb")
-size = Vector3(0.6, 0.5, 0.6)
-
-[node name="tree" type="StaticBody3D" groups=["interactable"]]
+[node name="tree" type="StaticBody3D" node_paths=PackedStringArray("tree_animation_player") groups=["interactable"]]
 collision_layer = 5
+collision_mask = 0
 script = ExtResource("1_a5g02")
+tree_animation_player = NodePath("TreeAnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.54419, 0.5)
-shape = SubResource("BoxShape3D_a5g02")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.05444, 0.5)
+shape = SubResource("BoxShape3D_kd132")
 
-[node name="3DShape" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+[node name="tree" parent="." instance=ExtResource("2_a5g02")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0.5, 0, 0.5)
 
-[node name="Stem" type="MeshInstance3D" parent="3DShape"]
-mesh = SubResource("BoxMesh_xkgv7")
-
-[node name="Leave1" type="MeshInstance3D" parent="3DShape"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
-mesh = SubResource("BoxMesh_a3qvm")
-
-[node name="Leave2" type="MeshInstance3D" parent="3DShape"]
-transform = Transform3D(0.999995, -0.00327969, -1.73395e-06, 0.00327969, 0.999994, 0.00108894, -1.82352e-06, -0.00108894, 0.999999, 0, 1.25, 0)
-mesh = SubResource("BoxMesh_crxe8")
-
-[node name="Leave3" type="MeshInstance3D" parent="3DShape"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
-mesh = SubResource("BoxMesh_ir0uo")
+[node name="TreeAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1oiyo")
+}

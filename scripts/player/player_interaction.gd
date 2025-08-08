@@ -1,5 +1,6 @@
 extends Node3D
 
+@export var item_collision: Area3D
 @export var selection_box: Node3D
 @export var camera: Camera3D
 
@@ -12,6 +13,7 @@ func _ready()-> void:
 
 func _process(_delta: float) -> void:
 	update_ray_cast()
+	run_ray_check()
 
 ## >> --------------- << ##
 
@@ -42,11 +44,22 @@ func update_ray_cast()-> void:
 			if pos.y < 0: y = 0
 			else: y = int(pos.y)
 			
+			item_collision.position = pos
 			selection_box.position = Vector3(grid(pos.x), y - 1, grid(pos.z))
 			selection_box.visible = true
 	else:
 		selection_box.visible = false
-	
+
+func run_ray_check()-> void:
+	if ray_query:
+		
+		var raycast_result = space_state.intersect_ray(ray_query)
+		if raycast_result:
+			var collider: Node3D = raycast_result["collider"]
+			
+			if collider.is_in_group("interactable"):
+				if Input.is_action_just_pressed("attack"):
+					collider.attacked()
 	
 
 ## >> SUPPORT FUNCTIONS << ##

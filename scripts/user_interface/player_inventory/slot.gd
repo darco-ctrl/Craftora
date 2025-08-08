@@ -6,6 +6,7 @@ class_name Slot
 var item_holding: Item
 var item_count: int
 var is_open: bool = false
+var parent_controler
 
 func _process(delta: float) -> void:
 	if is_open and item_holding:

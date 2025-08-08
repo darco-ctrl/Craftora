@@ -23,287 +23,177 @@ inventory_ui = NodePath("Inventory")
 hotbar_ui = NodePath("HotBar")
 
 [node name="Inventory" type="TextureRect" parent="."]
-visible = false
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -523.0
-offset_top = -289.0
-offset_right = 523.0
-offset_bottom = 289.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 399.0
+offset_bottom = 226.0
 texture = ExtResource("1_yno4q")
 
 [node name="InventorySlotsGrid" type="GridContainer" parent="Inventory"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0127877
-anchor_top = 0.0277778
-anchor_right = 0.70844
-anchor_bottom = 0.972222
-offset_top = -3.05176e-05
-offset_right = -3.05176e-05
-offset_bottom = 3.05176e-05
+anchor_left = 0.0273632
+anchor_top = 0.0486726
+anchor_right = 0.70398
+anchor_bottom = 0.951327
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 8
+metadata/_edit_use_anchors_ = true
 
 [node name="slot1" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot2" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot3" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot4" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot5" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot6" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot7" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot8" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot9" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot10" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot11" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot12" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot13" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot14" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot15" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot16" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot17" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot18" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot19" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot20" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot21" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot22" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot23" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot24" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot25" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot26" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot27" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot28" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot29" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot30" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot31" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot32" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot33" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot34" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot35" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot36" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot37" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot38" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot39" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot40" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot41" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot42" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot43" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot44" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot45" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot46" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot47" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="slot48" parent="Inventory/InventorySlotsGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="HandCraftingGrid" type="GridContainer" parent="Inventory"]
-layout_mode = 0
-anchor_left = 0.769821
-anchor_top = 0.101852
-anchor_right = 0.943734
-anchor_bottom = 0.416667
+visible = false
+layout_mode = 1
+offset_right = 68.0
+offset_bottom = 68.0
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="slot" parent="Inventory/HandCraftingGrid" instance=ExtResource("2_28yty")]
 layout_mode = 2
@@ -389,3 +279,8 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Inventory2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

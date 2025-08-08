@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlbh7cl6tkpc1"]
+
+[ext_resource type="Script" uid="uid://dav320uorffe4" path="res://scripts/user_interface/debbug_profile/debbug_profile.gd" id="1_surgq"]
+
+[node name="DebbugProfile" type="Control" node_paths=PackedStringArray("frame_displayer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_surgq")
+frame_displayer = NodePath("FrameDisplay")
+
+[node name="FrameDisplay" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

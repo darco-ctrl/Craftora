@@ -11,7 +11,7 @@ var noise: FastNoiseLite
 var frequency: float = 0.04
 var seed: int
 var noise_type: int = FastNoiseLite.TYPE_PERLIN
-var tree_spawn_strenght: float = 3
+var tree_scatering: float = 3
 
 var loaded_chunks: Dictionary[Vector2i, MeshInstance3D] = {}
 var loaded_objects: Dictionary[Vector2i, ResourceTree] = {}
@@ -123,7 +123,7 @@ func create_resource_queue()-> void:
 				if !loaded_objects.has(new_position):
 					var noise_value: float = noise.get_noise_2d(x, y)
 					if noise_value > 0.1:
-						var spawn_chance := pow((noise_value + 1.0) / 2.0, tree_spawn_strenght)
+						var spawn_chance := pow((noise_value + 1.0) / 2.0, tree_scatering)
 
 						if randf() < spawn_chance:
 							var new_res_data = ResourcesQueueData.new(chunk, ItemType.TREE)

@@ -5,11 +5,13 @@ extends Control
 @export var inventory_ui: TextureRect
 @export var hotbar_ui: TextureRect
 
-var hotbar_size
+var hotbar_size: int = 8
+var is_inventory_open: bool = false
 
 func _ready() -> void:
+	inventory.slots.resize(58)
 	inventory.slots = setup_slots()
-	#inventory_ui	.visible = false
+	inventory_ui	.visible = false
 
 func setup_slots()-> Array:
 	var hotbar_grid: GridContainer = hotbar_ui.get_child(0)
@@ -29,6 +31,7 @@ func setup_slots()-> Array:
 	for i_slot: Slot in invo_slots:
 		return_invo_slots.append(i_slot)
 	
+	print(return_invo_slots.size())
 	return return_invo_slots
 
 func _process(delta: float) -> void:
@@ -36,4 +39,22 @@ func _process(delta: float) -> void:
 
 func invo_inputs()-> void:
 	if Input.is_action_just_pressed("toggle_inventory"):
-		inventory_ui.visible = !inventory_ui.visible
+		toggle_invo()
+
+func toggle_invo()-> void:
+	if is_inventory_open:
+		
+		for i in range(8, inventory.slots.size()):
+			var slot: Slot = inventory.slots[i]
+			slot.is_open = true
+			
+		is_inventory_open = !is_inventory_open
+		inventory_ui.visible = is_inventory_open
+	else:
+		
+		for i in range(8, inventory.slots.size()):
+			var slot: Slot = inventory.slots[i]
+			slot.is_open = false
+		
+		is_inventory_open = !is_inventory_open
+		inventory_ui.visible = is_inventory_open

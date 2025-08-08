@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://viiy8ncbd8xn" path="res://scripts/user_interface/player_inventory/slot.gd" id="1_5qq88"]
 
 [node name="slot" type="TextureRect" node_paths=PackedStringArray("item_texture")]
+custom_minimum_size = Vector2(34, 34)
 anchors_preset = -1
 anchor_right = 0.0177083
 anchor_bottom = 0.0314815
