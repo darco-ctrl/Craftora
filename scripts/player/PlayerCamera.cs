@@ -9,7 +9,7 @@ public partial class PlayerCamera : Node3D
     [Export] public Node3D CameraPivot;
     [Export] public Node3D Camera;
 
-    [Export] public float Speed = 0.5f;
+    [Export] public float Speed = 0.3f;
     [Export] public float Acceleration = 0.1f;
     [Export] public float CameraZoomInOutSpeed = 20.0f;
     [Export] public float MaxZoom = 3.0f;
