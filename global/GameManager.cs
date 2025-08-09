@@ -4,8 +4,8 @@ using System;
 public partial class GameManager : Node
 {
 
-	const int TICK_PER_SECOND = 40;
-	const float TICK_INTERVAL = 0.025f;
+	const int TICK_PER_SECOND = 20;
+	const float TICK_INTERVAL = 0.5f;
 	public int Tick = 0;
 	private float TickTime = 0.0f;
 
