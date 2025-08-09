@@ -1,72 +1,104 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Vec2IList = System.Collections.Generic.List<Godot.Vector2I>;
 
 public partial class ChunkLoader : Node
 {
-	GameManager GM;
-
-	public partial class ResourcesQueueData : GodotObject
-	{
-		public Vector2I ChunkPos;
-		public int ItemType;
-		public ResourcesQueueData(Vector2I p, int it)
-		{
-			ChunkPos = p;
-			ItemType = it;
-		}
-	}
+	GameManager gameManager;
 
 	public WorldManager WorldManager;
 
-	public int RenderDistance = 3;
-	public int RenderDistanceSquared;
-	public Vector2I chunk_size = new Vector2I(16, 16);
+	private int RenderDistance = 3;
+	private int RenderDistanceSquared;
+	private Vector2I chunk_size = new Vector2I(16, 16);
 
-	public FastNoiseLite NoiseLite;
-	public float Frequency = 0.04f;
-	public int Seed;
-	public int NoiseType = (int)FastNoiseLite.NoiseTypeEnum.Perlin;
-	public float TreeScattering = 3;
+	private FastNoiseLite NoiseLite;
+	private float Frequency = 0.04f;
+	private int Seed;
+	private int NoiseType = (int)FastNoiseLite.NoiseTypeEnum.Perlin;
+	private float TreeScattering = 3;
+	private float TreeSpawningThreashold = -1f;
 
-	public Dictionary<Vector2I, MeshInstance3D> LoadedChunks = new();
-	public Dictionary<Vector2I, TreeRes> LoadedObjects = new();
+	private Vector3 PlayerPosition;
+	private Vector2I PlayerChunkPosition;
 
-	public const int MAX_UNLOADS_PER_FRAME = 10;
+	public Dictionary<Vector2I, MeshInstance3D> LoadedChunksPlane = new Dictionary<Vector2I, MeshInstance3D>();
+	public Dictionary<Vector2I, TreeRes> LoadedObjects = new Dictionary<Vector2I, TreeRes>();
 
-	public Array<Vector2I> QueuedChunks = new();
-	public Dictionary<Vector2I, ResourcesQueueData> QueuedObjects = new();
-	public Array<Vector2I> ChunksToUnlaod = new();
-	public Array<Vector2I> ObjectsToUnload = new();
+	private Vec2IList QueuedChunks = new();
+	private Vec2IList QueuedTrees = new();
 
-	public enum ItemType { TREE, STONE }
-	public enum ChunkLoadPhase { QUEUE_CHUNKS_PHASE, QUEUE_RES_PHASE, RENDER_QUEUED_OBJECTS_PHASE }
+	private Vec2IList ChunksToUnload = new();
+	private Vec2IList TreesTounload = new();
+
+	public bool IsChunkLoading = false;
 
 	public override void _Ready()
 	{
-		GM = (GameManager)GetTree().Root.GetNode("GameManager");
+		gameManager = GetTree().Root.GetNode<GameManager>("GameManager");
 
-		RenderDistanceSquared = RenderDistance * RenderDistance;
-		Seed = (int)(GD.Randi() & int.MaxValue);
+		SetUpNoise();
 	}
 
 	public override void _Process(double delta)
 	{
-		ChunkUnloaderProcess();
+		PlayerPosition = (Vector3I)(gameManager.Player.CameraGroundPivot.Position);
+		PlayerChunkPosition = PositionToChunkCoordinates(PlayerPosition);
+
+		if (!IsChunkLoading)
+		{
+			IsChunkLoading = true;
+			_ = AsyncManager().ContinueWith(_ => IsChunkLoading = false);
+		}
+
 	}
 
-	public void SetupReosourcesNoise()
+
+	private void SetUpNoise()
 	{
-		NoiseLite = new FastNoiseLite();
-		NoiseLite.NoiseType = (FastNoiseLite.NoiseTypeEnum)NoiseType;
+		NoiseLite.NoiseType = (Godot.FastNoiseLite.NoiseTypeEnum)NoiseType;
 		NoiseLite.Frequency = Frequency;
 		NoiseLite.Seed = Seed;
 	}
 
-	public Array<Vector2I> MakeNewChunkList()
+	private async Task AsyncManager()
 	{
-		Array<Vector2I> chunks_to_load = new Array<Vector2I>();
-		Vector2I player_chunk_position = PositionToChunkCoordinates(GM.Player.CameraGroundPivot.Position);
+		await Task.Run(() =>
+		{
+			ChunkQueueListPrep();
+		});
+	}
+
+	private void ChunkRenderingManager()
+	{
+		switch ((int)(gameManager.Tick % 2))
+		{
+			case 0:
+				CreateChunkMesh();
+				break;
+			case 1:
+				CreateTree();
+				break;
+		}
+	}
+
+	private void CreateChunkMesh()
+	{
+
+	}
+
+	private void CreateTree()
+	{
+
+	}
+
+	private void ChunkQueueListPrep()
+	{
+		Vec2IList chunkToLoad = new();
 
 		for (int x = -RenderDistance; x <= RenderDistance; x++)
 		{
@@ -74,138 +106,61 @@ public partial class ChunkLoader : Node
 			{
 				if (IsInRadius(x, y))
 				{
-					Vector2I new_chunk = new Vector2I(x + player_chunk_position.X, y + player_chunk_position.Y);
-					if (!LoadedChunks.ContainsKey(new_chunk))
-						chunks_to_load.Add(new_chunk);
-				}
-			}
-		}
-		return chunks_to_load;
-	}
+					Vector2I newChunk = new Vector2I(x + PlayerChunkPosition.X, y + PlayerChunkPosition.Y);
 
-	public void ChunkUnloaderPrepare()
-	{
-		foreach (var chunk in LoadedChunks.Keys)
-		{
-			if (CanUnloadChunk(chunk))
-			{
-				var plane = LoadedChunks[chunk];
-				if (GodotObject.IsInstanceValid(plane))
-					ChunksToUnlaod.Add(chunk);
-				else
-					LoadedObjects.Remove(chunk);
-			}
-		}
-
-		foreach (var object_pos in LoadedObjects.Keys)
-		{
-			TreeRes Tree = LoadedObjects[object_pos];
-			if (GodotObject.IsInstanceValid(Tree))
-			{
-				if (!LoadedChunks.ContainsKey(Tree.ChunkPosition))
-					ObjectsToUnload.Add(object_pos);
-			}
-			else
-				LoadedObjects.Remove(object_pos);
-		}
-	}
-
-	public void ChunkUnloaderProcess()
-	{
-		for (int i = 0; i < MAX_UNLOADS_PER_FRAME; i++)
-		{
-			if (ChunksToUnlaod.Count > 0)
-			{
-				Vector2I chunk = ChunksToUnlaod[^1];
-				ChunksToUnlaod.RemoveAt(ChunksToUnlaod.Count - 1);
-				if (LoadedChunks.ContainsKey(chunk))
-				{
-					LoadedChunks[chunk].Free();
-					LoadedChunks.Remove(chunk);
-				}
-			}
-
-			if (ObjectsToUnload.Count > 0)
-			{
-				Vector2I obj = ObjectsToUnload[^1];
-				ObjectsToUnload.RemoveAt(ObjectsToUnload.Count - 1);
-				if (LoadedObjects.ContainsKey(obj))
-				{
-					LoadedObjects[obj].Free();
-					LoadedObjects.Remove(obj);
-				}
-			}
-		}
-	}
-
-	public void CreateResourceQueue()
-	{
-		foreach (var chunk in QueuedChunks)
-		{
-			Vector2I chunk_from = (Vector2I)ChunkCoordinatesToPosition(chunk, true);
-			Vector2I chunk_to = chunk_from + new Vector2I(chunk_size.X, chunk_size.Y);
-
-			for (int x = (int)chunk_from.X; x < (int)chunk_to.X; x++)
-			{
-				for (int y = (int)chunk_from.Y; y < (int)chunk_to.Y; y++)
-				{
-					Vector2I new_position = new Vector2I(x, y);
-					if (!LoadedObjects.ContainsKey(new_position))
+					if (!LoadedChunksPlane.ContainsKey(newChunk) && !QueuedChunks.Contains(newChunk))
 					{
-						float noise_value = NoiseLite.GetNoise2D(x, y);
-						if (noise_value > 0.1f)
-						{
-							float spawn_chance = Mathf.Pow((noise_value + 1.0f) / 2.0f, TreeScattering);
-							if (GD.Randf() < spawn_chance)
-							{
-								QueuedObjects[new_position] = new ResourcesQueueData(chunk, (int)ItemType.TREE);
-							}
-						}
+						chunkToLoad.Add(newChunk);
+						CreateTree(newChunk);
 					}
 				}
 			}
 		}
-	}
 
-	public void RenderGroundMesh()
-	{
-		if (QueuedChunks.Count > 0)
+		Dictionary<Vector2I, MeshInstance3D> _loadedChunks = LoadedChunksPlane.Duplicate();
+
+		foreach (Vector2I chunk in chunkToLoad)
 		{
-			foreach (var chunk in new Array<Vector2I>(QueuedChunks))
+			if (_loadedChunks.ContainsKey(chunk))
 			{
-				MeshInstance3D new_chunk_mesh = CreatePlaneMesh(chunk_size);
-				WorldManager.Grounds.AddChild(new_chunk_mesh);
-				new_chunk_mesh.Visible = true;
-				new_chunk_mesh.Position = (Vector3)ChunkCoordinatesToPosition(chunk, false);
-				LoadedChunks[chunk] = new_chunk_mesh;
-				QueuedChunks.Remove(chunk);
+				_loadedChunks.Remove(chunk);
+			}
+			else
+			{
+				QueuedChunks.Add(chunk);
 			}
 		}
+
+		ChunksToUnload = _loadedChunks.Keys.ToList();
+
+		// LEFT AT CHUNK LOADING QUEUE SYSTEM
+
 	}
 
-	public MeshInstance3D CreatePlaneMesh(Vector2 plane_size)
+	private void CreateTree(Vector2I chunk)
 	{
-		MeshInstance3D chunk_mesh = new MeshInstance3D();
-		PlaneMesh plane_mesh = new PlaneMesh();
-		plane_mesh.Size = plane_size;
-		plane_mesh.Material = WorldManager.Ground_Material;
-		plane_mesh.CenterOffset = new Vector3(plane_size.X / 2, 0, plane_size.Y / 2);
-		chunk_mesh.Mesh = plane_mesh;
-		return chunk_mesh;
-	}
+		Vector2I chunk_from = (Vector2I)ChunkCoordinatesToPosition(chunk, true);
+		Vector2I chunk_to = chunk_from + new Vector2I(chunk_size.X, chunk_size.Y);
 
-	public void TreeLoader()
-	{
-		foreach (var block_pos in new Array<Vector2I>(QueuedObjects.Keys))
+		for (int x = chunk_from.X; x <= chunk_to.X; x++)
 		{
-			ResourcesQueueData CurrentObject = QueuedObjects[block_pos];
-			TreeRes Tree = (TreeRes)WorldManager.Object_Array[CurrentObject.ItemType].Instantiate();
-			Tree.ChunkPosition = CurrentObject.ChunkPos;
-			LoadedObjects[block_pos] = Tree;
-			Tree.Position = new Vector3(block_pos.X, 0, block_pos.Y);
-			Tree.Visible = true;
-			WorldManager.Resources.AddChild(Tree);
-			QueuedObjects.Remove(block_pos);
+			for (int y = chunk_from.Y; y <= chunk_to.Y; y++)
+			{
+				Vector2I newPosition = new Vector2I(x, y);
+
+				if (!LoadedObjects.ContainsKey(newPosition) && !QueuedTrees.Contains(newPosition))
+				{
+					float noise_value = NoiseLite.GetNoise2D(x, y);
+					if (TreeSpawningThreashold < noise_value)
+					{
+						float spawn_chance = Mathf.Pow((noise_value + 1.0f) / 2.0f, TreeScattering);
+						if (GD.Randf() < spawn_chance)
+						{
+							QueuedTrees.Add(newPosition);
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -221,5 +176,5 @@ public partial class ChunkLoader : Node
 			return new Vector3(Mathf.FloorToInt(chunk_pos.X * chunk_size.Y), 0, Mathf.FloorToInt(chunk_pos.Y * chunk_size.Y));
 	}
 
-	public bool CanUnloadChunk(Vector2I chunk_pos) => PositionToChunkCoordinates(GM.Player.CameraGroundPivot.Position).DistanceTo(chunk_pos) > RenderDistance;
+	public bool CanUnloadChunk(Vector2I chunk_pos) => PositionToChunkCoordinates(gameManager.Player.CameraGroundPivot.Position).DistanceTo(chunk_pos) > RenderDistance;
 }

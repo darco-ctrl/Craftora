@@ -32,13 +32,10 @@ public partial class WorldManager : Node3D
 
         switch ((int)(GM.Tick % 3))
         {
-            case (int)ChunkLoader.ChunkLoadPhase.QUEUE_CHUNKS_PHASE:
+            case (int)ChunkLoader.ChunkLoadPhase.PHASE_ONE:
                 Phase_One();
                 break;
-            case (int)ChunkLoader.ChunkLoadPhase.QUEUE_RES_PHASE:
-                Phase_Two();
-                break;
-            case (int)ChunkLoader.ChunkLoadPhase.RENDER_QUEUED_OBJECTS_PHASE:
+            case (int)ChunkLoader.ChunkLoadPhase.PHASE_TWO:
                 Phase_Three();
                 break;
             // case (int)ChunkLoader.ChunkLoadPhase.BLANK:
@@ -53,14 +50,8 @@ public partial class WorldManager : Node3D
         CL.ChunkUnloaderPrepare();
     }
 
-    public void Phase_Two()
-    {
-        CL.CreateResourceQueue();
-    }
-
     public void Phase_Three()
     {
-        CL.TreeLoader();
         CL.RenderGroundMesh();
     }
 
