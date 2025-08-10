@@ -1,0 +1,11 @@
+[gd_scene load_steps=5 format=3 uid="uid://dny8162kt0drx"]
+
+[ext_resource type="Script" uid="uid://dy6hpofk383g1" path="res://global/item_manager/ItemManager.cs" id="1_cd5sb"]
+[ext_resource type="PackedScene" uid="uid://d0ofp7405cwod" path="res://scenes/items/dropped_item.tscn" id="2_erhx8"]
+[ext_resource type="Resource" uid="uid://2ua15tuqfel7" path="res://data/items/log_1.tres" id="3_1mqne"]
+[ext_resource type="Script" uid="uid://rbcqvfgj8q8d" path="res://data/resources/Item.cs" id="3_repbc"]
+
+[node name="ItemManger" type="Node"]
+script = ExtResource("1_cd5sb")
+ItemDroppedScene = ExtResource("2_erhx8")
+Items = Array[ExtResource("3_repbc")]([null, ExtResource("3_1mqne")])

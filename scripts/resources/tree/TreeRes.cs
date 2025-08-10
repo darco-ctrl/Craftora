@@ -3,24 +3,29 @@ using System;
 
 public partial class TreeRes : StaticBody3D
 {
-	ChunkLoader chunkLoader;
+	GameManager game;
 
 	[Export] private AnimationPlayer TreeAnimationPlayer;
 	[Export] private VisibleOnScreenNotifier3D VisibleOnScreen;
 	[Export] private Node3D TreeMesh;
 
-	public Vector2I ChunkPosition;
+	private Vector3 ItemSpawnPivot;
+	private ItemManager.ItemType ItemType = ItemManager.ItemType.Log;
+
+	public Vector2I ChunkPosition = Vector2I.Zero;
 	public float TreeHealth = 100.0f;
 
-    public override void _Ready()
-    {
-		chunkLoader = GetTree().Root.GetNode<ChunkLoader>("ChunkLoader");
-    }
-
-
-    public override void _Process(double delta)
+	public override void _Ready()
 	{
-		if (chunkLoader.CanUnloadChunk(ChunkPosition))
+		game = GetTree().Root.GetNode<GameManager>("GameManager");
+
+
+	}
+
+
+	public override void _Process(double delta)
+	{
+		if (game.ChunkLoader.CanUnloadChunk(ChunkPosition))
 		{
 			QueueFree();
 		}
@@ -45,7 +50,13 @@ public partial class TreeRes : StaticBody3D
 
 		if (TreeHealth <= 0.0f)
 		{
-			QueueFree();
+			Treebroken();
 		}
+	}
+
+	private void Treebroken()
+	{
+		game.ItemManager.SpawnItem(TreeMesh.GlobalPosition + new Vector3(0, 0.3f, 0), ItemType);
+		QueueFree();
 	}
 }

@@ -4,6 +4,7 @@ using System;
 public partial class Slot : TextureRect
 {
 	[Export] TextureRect ItemTexture;
+	[Export] Label ItemCounterDisplay;
 
 	public Item HoldingItem;
 	public int ItemCount = 0;
@@ -16,6 +17,16 @@ public partial class Slot : TextureRect
 			if (HoldingItem.ItemTexture != ItemTexture.Texture)
 			{
 				ItemTexture.Texture = HoldingItem.ItemTexture;
+
+			}
+
+			if (ItemCount != 0)
+			{
+				ItemCounterDisplay.Text = ItemCount.ToString();
+			}
+			else
+			{
+				ItemCounterDisplay.Text = "";
 			}
 		}
     }

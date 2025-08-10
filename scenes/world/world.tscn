@@ -6,12 +6,9 @@
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_sl2e5"]
 
-[node name="world" type="Node3D" node_paths=PackedStringArray("Grounds", "Resources", "PlacedObjects")]
+[node name="world" type="Node3D"]
 script = ExtResource("1_dphjl")
-Grounds = NodePath("Ground")
-Resources = NodePath("Resources")
-PlacedObjects = NodePath("PlacedObjects")
-Object_Array = Array[PackedScene]([ExtResource("2_1fp7r"), null])
+Object_Array = Array[PackedScene]([ExtResource("2_1fp7r")])
 Ground_Material = ExtResource("2_sl2e5")
 
 [node name="WorldGroundCollision" type="StaticBody3D" parent="."]
@@ -22,9 +19,3 @@ collision_mask = 0
 shape = SubResource("WorldBoundaryShape3D_sl2e5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WorldGroundCollision"]
-
-[node name="Ground" type="Node3D" parent="."]
-
-[node name="Resources" type="Node3D" parent="."]
-
-[node name="PlacedObjects" type="Node3D" parent="."]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://3ropykt5sqe8"]
+
+[ext_resource type="Script" uid="uid://0yrmw13hbrdq" path="res://global/chunk_loader/ChunkLoader.cs" id="1_qibyf"]
+
+[node name="ChunkLoader" type="Node"]
+script = ExtResource("1_qibyf")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://2ua15tuqfel7"]
+
+[ext_resource type="PackedScene" uid="uid://38xnb1v4fjes" path="res://assets/models/items/log/tree_item.glb" id="1_ky0sq"]
+[ext_resource type="Texture2D" uid="uid://ddg4ogstqi11h" path="res://assets/texture/items/log_1.png" id="2_jfufh"]
+[ext_resource type="Script" uid="uid://rbcqvfgj8q8d" path="res://data/resources/Item.cs" id="3_04vyw"]
+
+[resource]
+script = ExtResource("3_04vyw")
+ItemName = "Log"
+ItemType = 1
+ItemUse = 0
+ItemTexture = ExtResource("2_jfufh")
+ItemMesh = ExtResource("1_ky0sq")
+metadata/_custom_type_script = "uid://rbcqvfgj8q8d"

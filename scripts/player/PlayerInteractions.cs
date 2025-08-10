@@ -8,13 +8,14 @@ public partial class PlayerInteractions : Node3D
     [Export] private Area3D ItemCollision;
     [Export] private Node3D SelectionBox;
     [Export] private Camera3D Camera;
+    [Export] private PlayerInventory PlrInventory;
 
     private PhysicsRayQueryParameters3D _rayQuery;
     private PhysicsDirectSpaceState3D _spaceState;
 
     public override void _Ready()
     {
-		GM = GetTree().Root.GetNode<GameManager>("GameManager");
+        GM = GetTree().Root.GetNode<GameManager>("GameManager");
         InitializeRay();
     }
 
@@ -83,6 +84,18 @@ public partial class PlayerInteractions : Node3D
                         collider.Call("Clicked");
                     }
                 }
+            }
+        }
+    }
+
+    private void OnItemCollisionAreaEntered(Area3D area)
+    {
+        if (area.GetParent().IsInGroup("DroppedItem"))
+        {
+            DroppedItem dropped_item = (DroppedItem)area.GetParent();
+            if (PlrInventory.Additem(dropped_item.HoldingItem))
+            {
+                dropped_item.QueueFree();
             }
         }
     }

@@ -5,5 +5,5 @@ using System;
 [GlobalClass]
 public partial class Inventory : Resource
 {
-    public Array<Slot> Slots = new Array<Slot>();
+    public Godot.Collections.Array<Slot> Slots = [];
 }

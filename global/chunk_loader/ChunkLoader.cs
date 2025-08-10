@@ -13,7 +13,8 @@ public partial class ChunkLoader : Node
 
 	public int RenderDistance = 3;
 	private int RenderDistanceSquared;
-	public Vector2I chunk_size = new Vector2I(16, 16);
+	public Vector2I ChunkSize = new Vector2I(16, 16);
+	//private Vector2I ChunkOirginOffset = new Vector2I(-1, -1);
 
 	private FastNoiseLite NoiseLite;
 	private float Frequency = 0.04f;
@@ -36,6 +37,7 @@ public partial class ChunkLoader : Node
 	private Vec2IList ChunksToUnload = new();
 
 	public bool IsChunkLoading = false;
+	public bool BiPassPlayerCheck = true;
 
 	private const int MAX_CHUNK_PLANE_RENDER_PER_FRAME = 50;
 	private const int MAX_OBJECT_RENDER_PER_FRAME = 50;
@@ -46,6 +48,8 @@ public partial class ChunkLoader : Node
 
 		RenderDistanceSquared = RenderDistance * RenderDistance;
 
+		BiPassPlayerCheck = true;
+
 		SetUpNoise();
 	}
 
@@ -55,8 +59,9 @@ public partial class ChunkLoader : Node
 		Vector2I newPlayerChunkPos = PositionToChunkCoordinates(PlayerPosition);
 
 		// Only update chunks when player moves to a new chunk
-		if (newPlayerChunkPos != PlayerChunkPosition)
+		if (newPlayerChunkPos != PlayerChunkPosition || BiPassPlayerCheck)
 		{
+			BiPassPlayerCheck = false;
 			PlayerChunkPosition = newPlayerChunkPos;
 
 			if (!IsChunkLoading)
@@ -85,23 +90,20 @@ public partial class ChunkLoader : Node
 
 		await Task.Run(() =>
 		{
-			// Use cached position to avoid race conditions
 			Vector2I playerPos = CachedPlayerChunkPosition;
 
-			// Find chunks to load
 			for (int x = -RenderDistance; x <= RenderDistance; x++)
 			{
 				for (int y = -RenderDistance; y <= RenderDistance; y++)
 				{
 					if (IsInRadius(x, y))
 					{
-						Vector2I newChunk = new Vector2I(x + playerPos.X, y + playerPos.Y);
+						Vector2I newChunk = new Vector2I(x + playerPos.X /*+ ChunkOirginOffset.X*/, y + playerPos.Y /*+ ChunkOirginOffset.Y */);
 						chunksToQueue.Add(newChunk);
 					}
 				}
 			}
 
-			// Find chunks to unload
 			lock (ChunkLock)
 			{
 				foreach (Vector2I loadedChunk in LoadedChunkPlanes.Keys)
@@ -114,7 +116,6 @@ public partial class ChunkLoader : Node
 			}
 		});
 
-		// Apply changes on main thread
 		lock (ChunkLock)
 		{
 			foreach (Vector2I chunk in chunksToQueue)
@@ -186,9 +187,9 @@ public partial class ChunkLoader : Node
 	{
 		MeshInstance3D chunk_mesh = new MeshInstance3D();
 		PlaneMesh plane_mesh = new PlaneMesh();
-		plane_mesh.Size = chunk_size;
+		plane_mesh.Size = ChunkSize;
 		plane_mesh.Material = WorldRoot.Ground_Material;
-		plane_mesh.CenterOffset = new Vector3(chunk_size.X / 2, 0, chunk_size.Y / 2);
+		plane_mesh.CenterOffset = new Vector3(ChunkSize.X / 2, 0, ChunkSize.Y / 2);
 		chunk_mesh.Mesh = plane_mesh;
 		return chunk_mesh;
 	}
@@ -246,7 +247,7 @@ public partial class ChunkLoader : Node
 	private void CreateTree(Vector2I chunk)
 	{
 		Vector2I chunk_from = (Vector2I)ChunkCoordinatesToPosition(chunk, true);
-		Vector2I chunk_to = chunk_from + new Vector2I(chunk_size.X, chunk_size.Y);
+		Vector2I chunk_to = chunk_from + new Vector2I(ChunkSize.X, ChunkSize.Y);
 
 		for (int x = chunk_from.X; x <= chunk_to.X; x++)
 		{
@@ -274,14 +275,14 @@ public partial class ChunkLoader : Node
 
 	// Fixed coordinate conversion - use correct chunk dimensions
 	public Vector2I PositionToChunkCoordinates(Vector3 pos) =>
-		new Vector2I(Mathf.FloorToInt(pos.X / chunk_size.X), Mathf.FloorToInt(pos.Z / chunk_size.Y));
+		new Vector2I(Mathf.FloorToInt(pos.X / ChunkSize.X), Mathf.FloorToInt(pos.Z / ChunkSize.Y));
 
 	public object ChunkCoordinatesToPosition(Vector2I chunk_pos, bool in_vector2 = false)
 	{
 		if (in_vector2)
-			return new Vector2I(chunk_pos.X * chunk_size.X, chunk_pos.Y * chunk_size.Y);
+			return new Vector2I(chunk_pos.X * ChunkSize.X, chunk_pos.Y * ChunkSize.Y);
 		else
-			return new Vector3(chunk_pos.X * chunk_size.X, 0, chunk_pos.Y * chunk_size.Y);
+			return new Vector3(chunk_pos.X * ChunkSize.X, 0, chunk_pos.Y * ChunkSize.Y);
 	}
 
 	public bool CanUnloadChunk(Vector2I chunk_pos) => PlayerChunkPosition.DistanceTo(chunk_pos) > RenderDistance;

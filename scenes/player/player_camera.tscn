@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://sp16ofwo3pbr"]
+[gd_scene load_steps=7 format=3 uid="uid://sp16ofwo3pbr"]
 
 [ext_resource type="Script" uid="uid://yqvoapqmgyve" path="res://scripts/player/PlayerCamera.cs" id="1_kw8wo"]
 [ext_resource type="Script" uid="uid://cxc3y5uy18mms" path="res://scripts/player/PlayerInteractions.cs" id="2_kw8wo"]
+[ext_resource type="PackedScene" uid="uid://cswebvh7nxxbf" path="res://scenes/player/PlayerInventory.tscn" id="3_sbsl8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1hb71"]
 transparency = 1
@@ -12,7 +13,7 @@ material = SubResource("StandardMaterial3D_1hb71")
 size = Vector3(1.01, 1.01, 1.01)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_kw8wo"]
-radius = 2.0
+radius = 1.5
 
 [node name="Player" type="Node3D" node_paths=PackedStringArray("CameraGroundPivot", "CameraPivot", "Camera")]
 script = ExtResource("1_kw8wo")
@@ -28,11 +29,12 @@ transform = Transform3D(0.707107, -0.408607, 0.577096, 0, 0.816138, 0.577858, -0
 [node name="Camera3D" type="Camera3D" parent="CameraGroundPivot/CameraPivot"]
 fov = 45.0
 
-[node name="PlayerInteractions" type="Node3D" parent="." node_paths=PackedStringArray("ItemCollision", "SelectionBox", "Camera")]
+[node name="PlayerInteractions" type="Node3D" parent="." node_paths=PackedStringArray("ItemCollision", "SelectionBox", "Camera", "PlrInventory")]
 script = ExtResource("2_kw8wo")
 ItemCollision = NodePath("../ItemCollision")
 SelectionBox = NodePath("SelectionPivot/SelectedBlock")
 Camera = NodePath("../CameraGroundPivot/CameraPivot/Camera3D")
+PlrInventory = NodePath("../PlayerUserInterface/Control/HotbarAndInventory")
 
 [node name="SelectionPivot" type="Node3D" parent="PlayerInteractions"]
 
@@ -42,8 +44,25 @@ mesh = SubResource("BoxMesh_kw8wo")
 skeleton = NodePath("../../..")
 
 [node name="ItemCollision" type="Area3D" parent="."]
-collision_layer = 8
-collision_mask = 0
+collision_layer = 0
+collision_mask = 8
+monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ItemCollision"]
 shape = SubResource("SphereShape3D_kw8wo")
+
+[node name="PlayerUserInterface" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="PlayerUserInterface"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HotbarAndInventory" parent="PlayerUserInterface/Control" instance=ExtResource("3_sbsl8")]
+layout_mode = 1
+
+[connection signal="area_entered" from="ItemCollision" to="PlayerInteractions" method="OnItemCollisionAreaEntered"]

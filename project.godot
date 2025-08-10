@@ -18,13 +18,15 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*res://global/GameManager.cs"
-ChunkLoader="*res://global/ChunkLoader.cs"
+GameManager="*res://global/game_manager/game_manager.tscn"
+ChunkLoader="*res://global/chunk_loader/chunk_loader.tscn"
+ItemManager="*res://global/item_manager/item_manager.tscn"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=2
 window/stretch/mode="viewport"
 window/vsync/vsync_mode=0
 
@@ -36,6 +38,11 @@ project/assembly_name="Craftora"
 
 block="A group to define this is a block"
 interactable=""
+DroppedItem=""
+
+[gui]
+
+theme/default_font_antialiasing=0
 
 [input]
 

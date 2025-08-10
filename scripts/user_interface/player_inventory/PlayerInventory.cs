@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class PlayerInventory : Control
 {
@@ -37,7 +36,6 @@ public partial class PlayerInventory : Control
         foreach (var iSlot in invoSlots)
             returnInvoSlots.Add((Slot)iSlot);
 
-        GD.Print(returnInvoSlots.Count);
         return returnInvoSlots;
     }
 
@@ -76,5 +74,34 @@ public partial class PlayerInventory : Control
             IsInventoryOpen = !IsInventoryOpen;
             InventoryUi.Visible = IsInventoryOpen;
         }
+    }
+
+    public bool Additem(Item item, int count = 1)
+    {
+        int first_null_index = -1;
+        for (int i = 0; i < Inventory.Slots.Count; i++)
+        {
+            Slot slot = Inventory.Slots[i];
+            if (slot.HoldingItem == null && first_null_index == -1)
+            {
+                first_null_index = i;
+            }
+            else if (slot.HoldingItem == item)
+            {
+                slot.ItemCount += count;
+                return true;
+            }
+        }
+
+        if (first_null_index != -1)
+        {
+            Slot slot = Inventory.Slots[first_null_index];
+            slot.HoldingItem = item;
+            slot.ItemCount += count;
+
+            return true;
+        }
+
+        return false;
     }
 }
